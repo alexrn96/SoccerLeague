@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SoccerLeagueManagement.DBModels;
 using SoccerLeagueManagement.Dtos;
-using System.Runtime;
 
 namespace SoccerLeagueManagement.Controllers
 {
@@ -12,10 +10,10 @@ namespace SoccerLeagueManagement.Controllers
     [ApiController]
     public class TeamController : ControllerBase
     {
-        private readonly ApplicationDbContext context;
+        private readonly SoccerLeagueDbContext context;
         private readonly IMapper mapper;
 
-        public TeamController(ApplicationDbContext context, IMapper mapper)
+        public TeamController(SoccerLeagueDbContext context, IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
@@ -28,8 +26,8 @@ namespace SoccerLeagueManagement.Controllers
             List<TeamDto> teams = mapper.Map<List<TeamDto>>(entityTeams);
             return teams;
         }
-        [HttpGet("{id:int}", Name ="GetCurrentTeam")]
-        public async Task<ActionResult<TeamDto>> GetTeam(int id)
+        [HttpGet("{id:guid}", Name ="GetCurrentTeam")]
+        public async Task<ActionResult<TeamDto>> GetTeam(Guid id)
         {
             EntityTeam team = await context.Team.FirstOrDefaultAsync(x => x.Id == id);
             if(team is null)
@@ -49,7 +47,7 @@ namespace SoccerLeagueManagement.Controllers
             return Ok(teamdto.Id);
         }
         [HttpPut ("{id}")]
-        public async Task<ActionResult> UpdateTeam(int id,[FromBody] TeamDto team)
+        public async Task<ActionResult> UpdateTeam(Guid id,[FromBody] TeamDto team)
         {
             EntityTeam entityTeam = mapper.Map<EntityTeam>(team);
             entityTeam.Id = id;
@@ -57,8 +55,8 @@ namespace SoccerLeagueManagement.Controllers
             await context.SaveChangesAsync();
             return NoContent();
         }
-        [HttpDelete ("{id:int}")]
-        public async Task<ActionResult<int>> DeleteTeam(int id)
+        [HttpDelete ("{id:guid}")]
+        public async Task<ActionResult<int>> DeleteTeam(Guid id)
         {
             bool existTeam = await context.Team.AnyAsync(x => x.Id == id);
             if (!existTeam)

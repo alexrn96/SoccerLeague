@@ -1,8 +1,9 @@
 ﻿
+using Module.SoccerLeagueManagement.Shared.DataTransferObjects;
+
 namespace SoccerLeagueManagement.Dtos;
-public class TeamDto
+public record TeamDto:BaseDbDto
 {
-    public int Id { get; set; }
     public string Name { get; set; }
     public IEnumerable<PlayerDto> Players = new List<PlayerDto>();
 }

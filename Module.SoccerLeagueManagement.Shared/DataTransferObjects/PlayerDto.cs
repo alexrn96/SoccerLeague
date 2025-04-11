@@ -1,8 +1,9 @@
 ﻿
+using Module.SoccerLeagueManagement.Shared.DataTransferObjects;
+
 namespace SoccerLeagueManagement.Dtos;
-public class PlayerDto
+public record PlayerDto:BaseDbDto
 {
-    public int Id { get; set; }
     public string Name { get; set; }
     public string IDNumber { get; set; }
     public string playingPosition { get; set; }

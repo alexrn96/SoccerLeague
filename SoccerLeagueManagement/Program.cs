@@ -1,5 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using Module.SoccerLeagueManagement.Infrastructure.Services;
+using Module.SoccerLeagueManagement.Shared.DataTransferObjects;
+using Module.SoccerLeagueManagement.Shared.DbModels;
+using Module.SoccerLeagueManagement.Shared.Interfaces;
 using SoccerLeagueManagement;
+using SoccerLeagueManagement.DBModels;
+using SoccerLeagueManagement.Dtos;
 using SoccerLeagueManagement.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +22,13 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 //AutoMapper
 builder.Services.AddAutoMapper(config => config.AddProfile<AutoMapperProfiles>());
 
+//Services
+builder.Services.AddScoped<IGenericCrudService<EntityPlayer, PlayerDto>,PlayerService>();
+builder.Services.AddScoped<IGenericCrudService<EntityTeam, TeamDto>, TeamService>();
+builder.Services.AddScoped<IGenericCrudService<EntitySoccerLeague, SoccerLeagueDto>,SoccerLeagueService>();
+
+
+
 // Add a CORS policy for the client
 builder.Services.AddCors(
     options => options.AddPolicy(
@@ -29,6 +42,8 @@ builder.Services.AddCors(
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+//swag
+builder.Services.AddOpenApiDocument();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();

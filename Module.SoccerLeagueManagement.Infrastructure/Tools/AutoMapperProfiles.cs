@@ -10,6 +10,7 @@ public class AutoMapperProfiles : Profile
     {
         CreateMap<EntityTeam, TeamDto>().ReverseMap();
         CreateMap<EntityPlayer, PlayerDto>().ReverseMap();
+        CreateMap<EntitySoccerLeague, SoccerLeagueDto>().ReverseMap();
         CreateMap<EntityPlayerTeam, PlayerTeamDto>().ReverseMap();
     }
 }

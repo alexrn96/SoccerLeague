@@ -7,8 +7,8 @@ using Module.SoccerLeagueManagement.Shared.DataTransferObjects;
 using Module.SoccerLeagueManagement.Shared.Interfaces;
 using SoccerLeagueManagement;
 
-namespace Module.SoccerLeagueManagement.Infrastructure.Services;
- public class GenericCrudService<TEntity,TDto>: IGenericCrudService<TEntity,TDto> where TEntity:BaseEntity<TEntity> where TDto:BaseDbDto
+namespace Module.SoccerLeagueManagement.Infrastructure.Generics;
+public class GenericCrudService<TEntity, TDto> : IGenericCrudService<TEntity, TDto> where TEntity : BaseEntity<TEntity> where TDto : BaseDbDto
 {
     protected readonly SoccerLeagueDbContext _dbContext;
     protected readonly IMapper _mapper;
